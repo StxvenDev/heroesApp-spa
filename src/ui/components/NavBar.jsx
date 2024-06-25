@@ -1,6 +1,5 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 
-
 export const Navbar = () => {
     const navigate = useNavigate();
     const onLogout = () => {
