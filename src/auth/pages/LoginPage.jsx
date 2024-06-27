@@ -8,7 +8,7 @@ export const LoginPage = () => {
   const onLogin = () => {
     login('Steven Bossio');
     navigate("/marvel", {
-      replace: true,
+      replace: true
     });
   };
   return (
