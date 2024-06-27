@@ -20,7 +20,7 @@ export const HeroPage = () => {
 
 
   return (
-    <div className="row mt-5 animate__animated animate__backInLeft ">
+    <div className="row mt-3 animate__animated animate__backInLeft ">
       <div className="col-4">
         <img 
           src={`/heroes/${id}.jpg`} 

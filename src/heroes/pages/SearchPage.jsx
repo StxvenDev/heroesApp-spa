@@ -2,17 +2,21 @@ import React from 'react'
 import { useForm } from '../../hooks/useForm';
 import { useLocation, useNavigate } from 'react-router-dom';
 import queryString from 'query-string'
+import { getHeroesByName } from '../helpers/getHeroesByName';
+import { HeroCard } from '../components/HeroCard';
 
 const searchHeroForm = {
   searchText : ''
 }
 
-
 export const SearchPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {q = ''} = queryString.parse(location.search);
+  const heroes = getHeroesByName(q);
   const {onInputChange, onResetForm, searchText} = useForm(searchHeroForm);
+  const showSearch = (q.length === 0);
+  const showError = (q.length > 0 && heroes.length === 0);
   const onSearchSubmit = (event) => {
     event.preventDefault();
     if(searchText.trim() <= 1) return;
@@ -45,12 +49,17 @@ export const SearchPage = () => {
         <div className='col-7'>
           <h4>Result</h4>
           <hr />
-          <div className='alert alert-primary'>
-            Search a hero
-          </div>
-          <div className='alert alert-danger'>
-            Parece que no tenemos a <b>{q}</b> en nuestra lista
-          </div>
+            <div className='alert alert-primary' style={{display : showSearch ? '' : 'none'}}>
+              Search a hero
+            </div>
+            <div className='alert alert-danger' style={{display : showError ? '' : 'none'}}>
+              Parece que no tenemos a <b>{q}</b> en nuestra lista 
+            </div>
+          {
+            heroes.map( hero => (
+              <HeroCard key={hero.id} {...hero} />
+            ))
+          }
         </div>
       </div>
     </>
