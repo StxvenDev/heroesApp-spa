@@ -1,7 +1,7 @@
 import React from 'react'
 import { useForm } from '../../hooks/useForm';
 import { useLocation, useNavigate } from 'react-router-dom';
-import queryString from 'query-string'
+import queryString from 'query-string';
 import { getHeroesByName } from '../helpers/getHeroesByName';
 import { HeroCard } from '../components/HeroCard';
 
