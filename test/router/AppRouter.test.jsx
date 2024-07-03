@@ -16,6 +16,19 @@ describe('Pruebas en <AppRouter />', () => {
                 </AuthContext.Provider>
             </MemoryRouter>
         )
-        
+        expect(screen.getAllByText('Login').length).toBe(2);
      });
+     test('should marvel component if the user is auth', () => { 
+        const authState = {
+            logged : true
+        }
+        render(
+            <MemoryRouter initialEntries={['/login']} >
+                <AuthContext.Provider value={{authState}} >
+                    <AppRouter />
+                </AuthContext.Provider>
+            </MemoryRouter>
+        )
+        expect(screen.getByText('Marvel')).toBeTruthy();
+      });
  });
