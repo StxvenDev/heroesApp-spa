@@ -2,7 +2,8 @@ import React from 'react'
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Navbar } from "../../../src/ui";
 import { AuthContext } from '../../../src/auth';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, useNavigate } from 'react-router-dom';
+
 
 /**
  * Todo: Nombre de la persona
@@ -11,15 +12,24 @@ import { MemoryRouter } from 'react-router-dom';
  *  * 2. logout
  */
 
+const mockedUseNavigate = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useNavigate : () => mockedUseNavigate
+}));
+
 describe('test in <Navbar />', () => { 
-    test('should show the person name', () => { 
-        const authState = {
-            logged : true,
-            user : {
-                id : 'abc',
-                name : 'Juan'
-            }
+    const authState = {
+        logged : true,
+        user : {
+            id : 'abc',
+            name : 'Juan'
         }
+    }
+
+    beforeEach(() =>  jest.clearAllMocks())
+    test('should show the person name', () => { 
         render(
             <MemoryRouter initialEntries={['/marvel']}>
                 <AuthContext.Provider value={{authState}}>
@@ -33,13 +43,6 @@ describe('test in <Navbar />', () => {
      });
      test('should call navigate and logout function', () => { 
         const logout = jest.fn();
-        const authState = {
-            logged : true,
-            user : {
-                id : 'abc',
-                name : 'Juan'
-            }
-        }
         render(
             <MemoryRouter initialEntries={['/marvel']}>
                 <AuthContext.Provider value={{authState, logout}}>
@@ -50,5 +53,6 @@ describe('test in <Navbar />', () => {
         const buttonLogout = screen.getByRole('button');
         fireEvent.click(buttonLogout);
         expect(logout).toHaveBeenCalled();
+        expect(mockedUseNavigate).toHaveBeenCalledWith("/login", {"replace": true});
       });
  });
