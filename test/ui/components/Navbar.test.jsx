@@ -38,7 +38,7 @@ describe('test in <Navbar />', () => {
             </MemoryRouter>
         );
         screen.debug();
-        const userName = screen.getByLabelText('span').innerHTML;
+        const userName = screen.getByLabelText('span').innerHTML; 
         expect(userName).toBe(authState.user.name);
      });
      test('should call navigate and logout function', () => { 

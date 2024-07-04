@@ -52,7 +52,7 @@ export const SearchPage = () => {
             <div className='alert alert-primary' style={{display : showSearch ? '' : 'none'}}>
               Search a hero
             </div>
-            <div className='alert alert-danger' style={{display : showError ? '' : 'none'}}>
+            <div className='alert alert-danger' aria-label='noFound' style={{display : showError ? '' : 'none'}}>
               Parece que no tenemos a <b>{q}</b> en nuestra lista 
             </div>
           {
